@@ -1,0 +1,23 @@
+[
+    {
+        "model": "penpalapi.topic",
+        "pk": 1,
+        "fields": {
+            "label": "Love"
+        }
+    },
+    {
+        "model": "penpalapi.topic",
+        "pk": 2,
+        "fields": {
+            "label": "Thank you"
+        }
+    },
+    {
+        "model": "penpalapi.topic",
+        "pk": 3,
+        "fields": {
+            "label": "Get well"
+        }
+    }
+]

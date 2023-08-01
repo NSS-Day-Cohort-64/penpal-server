@@ -1,0 +1,35 @@
+[
+    {
+        "model": "penpalapi.letter",
+        "pk": 1,
+        "fields": {
+            "body": "Ipsam et voluptatum dolores non. Ratione quos consectetur modi eveniet neque tenetur. Repellat illum saepe vel quas. Alias et tenetur tempora est accusantium. Ratione asperiores distinctio aperiam. Fugit laboriosam ut.",
+            "author": 1,
+            "recipient": 2,
+            "topic": 2,
+            "date_created": "2023-08-01"
+        }
+    },
+    {
+        "model": "penpalapi.letter",
+        "pk": 2,
+        "fields": {
+            "body": "Ut doloremque consequuntur deserunt. Maxime laborum nihil. Qui deserunt rerum est ut ad. Voluptatum molestias quibusdam. Ea nisi eos magnam eos qui.",
+            "author": 1,
+            "recipient": 3,
+            "topic": 3,
+            "date_created": "2023-08-01"
+        }
+    },
+    {
+        "model": "penpalapi.letter",
+        "pk": 3,
+        "fields": {
+            "body": "Sit molestiae hic. Necessitatibus doloremque consequatur molestiae quis dignissimos.",
+            "author": 2,
+            "recipient": 1,
+            "topic": 1,
+            "date_created": "2023-08-01"
+        }
+    }
+]
