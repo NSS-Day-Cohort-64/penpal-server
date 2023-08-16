@@ -16,12 +16,15 @@ def login_user(request):
     Method arguments:
       request -- The full HTTP request object
     '''
-    email = request.data['email']
-    password = request.data['password']
+    email = request.data.get('email', None)
+    password = request.data.get('password', None)
 
     # Use the built-in authenticate method to verify
     # authenticate returns the user object or None if no user is found
-    authenticated_user = authenticate(username=email, password=password)
+    if email is not None and password is not None:
+        authenticated_user = authenticate(username=email, password=password)
+    else:
+        return Response({'message': 'Please provide email and password'}, status=status.HTTP_401_UNAUTHORIZED)
 
     # If authentication was successful, respond with their token
     if authenticated_user is not None:

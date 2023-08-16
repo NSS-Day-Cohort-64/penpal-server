@@ -2,6 +2,7 @@
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
+from django.db.models import Q
 from penpalapi.models import Letter, Topic
 from django.contrib.auth.models import User
 
@@ -17,6 +18,23 @@ class LetterView(ViewSet):
         """
 
         letters = Letter.objects.all()
+
+        # Check if the query string parameter is there or not
+        user = request.query_params.get("user", None) # "author" or "recipient" or None
+
+        # If it is there, check if it is "recipient"
+        if user == "either":
+            letters = letters.filter(
+                Q(author=request.auth.user) |
+                Q(recipient=request.auth.user)
+            )
+
+        if user == "author":
+            letters = letters.filter(author=request.auth.user)
+
+        if user == "recipient":
+            letters = letters.filter(recipient=request.auth.user)
+
         serialized = LetterSerializer(letters, many=True)
         return Response(serialized.data, status=status.HTTP_200_OK)
 
@@ -28,6 +46,33 @@ class LetterView(ViewSet):
         """
 
         return Response(None, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def create(self, request):
+        """Handle POST requests for creating a new letter
+
+        Returns:
+            Response -- JSON serialized letter record
+        """
+        recipient = User.objects.get(pk=request.data["recipient"])
+        topic = Topic.objects.get(pk=request.data["topic"])
+
+
+        # new_letter = Letter()
+        # new_letter.body=request.data["body"]
+        # new_letter.recipient=recipient
+        # new_letter.topic=topic
+        # new_letter.author=request.auth.user
+        # new_letter.save()
+        letter = Letter.objects.create(
+            body=request.data["body"],
+            recipient=recipient,
+            topic=topic,
+            author=request.auth.user
+        )
+
+        serialized = LetterSerializer(letter, many=False)
+        return Response(serialized.data, status=status.HTTP_201_CREATED)
+
 
 
 class UserSerializer(serializers.ModelSerializer):

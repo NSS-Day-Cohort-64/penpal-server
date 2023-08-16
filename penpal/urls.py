@@ -18,11 +18,14 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
 from rest_framework import routers
-from penpalapi.views import LetterView
+from penpalapi.views import LetterView, TagView, TopicView, RecipientView
 from penpalapi.views import register_user, login_user
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'letters', LetterView, 'letter')
+router.register(r'tags', TagView, 'tag')
+router.register(r'topics', TopicView, 'topic')
+router.register(r'recipients', RecipientView, 'elephant')
 
 urlpatterns = [
     path('', include(router.urls)),

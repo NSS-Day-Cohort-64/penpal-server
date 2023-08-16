@@ -1,0 +1,42 @@
+[
+    {
+        "model": "penpalapi.tag",
+        "pk": 1,
+        "fields": {
+            "label": "Birth",
+            "date_created": "2023-08-14"
+        }
+    },
+    {
+        "model": "penpalapi.tag",
+        "pk": 2,
+        "fields": {
+            "label": "Graduate",
+            "date_created": "2023-08-14"
+        }
+    },
+    {
+        "model": "penpalapi.tag",
+        "pk": 3,
+        "fields": {
+            "label": "New job",
+            "date_created": "2023-08-14"
+        }
+    },
+    {
+        "model": "penpalapi.tag",
+        "pk": 4,
+        "fields": {
+            "label": "Went to space",
+            "date_created": "2023-08-14"
+        }
+    },
+    {
+        "model": "penpalapi.tag",
+        "pk": 5,
+        "fields": {
+            "label": "Had Steve as an",
+            "date_created": "2023-08-14"
+        }
+    }
+]

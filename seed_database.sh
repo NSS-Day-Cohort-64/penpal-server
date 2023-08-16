@@ -9,3 +9,4 @@ python3 manage.py loaddata users
 python3 manage.py loaddata tokens
 python3 manage.py loaddata topics
 python3 manage.py loaddata letters
+python3 manage.py loaddata tags
