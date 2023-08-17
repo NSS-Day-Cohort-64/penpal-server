@@ -3,7 +3,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
 from django.db.models import Q
-from penpalapi.models import Letter, Topic
+from penpalapi.models import Letter, Topic, Tag, LetterTag
 from django.contrib.auth.models import User
 
 
@@ -55,6 +55,7 @@ class LetterView(ViewSet):
         """
         recipient = User.objects.get(pk=request.data["recipient"])
         topic = Topic.objects.get(pk=request.data["topic"])
+        tags = request.data["tags"] # Please send us an array of integers
 
 
         # new_letter = Letter()
@@ -69,6 +70,17 @@ class LetterView(ViewSet):
             topic=topic,
             author=request.auth.user
         )
+
+        for tag_id in tags:
+            try:
+                tag = Tag.objects.get(pk=tag_id)
+                LetterTag.objects.create(
+                    letter=letter,
+                    tag=tag
+                )
+
+            except Tag.DoesNotExist:
+                pass
 
         serialized = LetterSerializer(letter, many=False)
         return Response(serialized.data, status=status.HTTP_201_CREATED)
@@ -85,12 +97,18 @@ class TopicSerializer(serializers.ModelSerializer):
         model = Topic
         fields = ('id', 'label', )
 
+class LetterTagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ('id', 'label', )
+
 class LetterSerializer(serializers.ModelSerializer):
     """JSON serializer for letters"""
     topic = TopicSerializer(many=False)
     author = UserSerializer(many=False)
     recipient = UserSerializer(many=False)
+    tags = LetterTagSerializer(many=True)
 
     class Meta:
         model = Letter
-        fields = ('id', 'author', 'recipient', 'body', 'date_created', 'topic')
+        fields = ('id', 'author', 'recipient', 'body', 'date_created', 'topic', 'tags')
